@@ -1,4 +1,4 @@
-﻿"""
+"""
 Admin configuration for farmacia.
 """
 
@@ -9,8 +9,8 @@ from farmacia.models import InventarioFarmacia, DispensacionMedicamentos
 class InventarioAdmin(admin.ModelAdmin):
     list_display = ('nombre_medicamento', 'cantidad_stock', 'nivel_minimo', 'precio_unitario', 
                     'necesita_reponer')
-    list_filter = ('necesita_reponer',)
     search_fields = ('nombre_medicamento', 'nombre_generico')
+
 
 
 class DispensacionAdmin(admin.ModelAdmin):

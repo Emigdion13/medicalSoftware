@@ -1,4 +1,4 @@
-﻿# Django settings for medic system.
+# Django settings for medic system.
 
 import os
 from pathlib import Path
@@ -20,11 +20,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     # Aplicaciones del sistema
+    'roles',
     'usuarios',
     'pacientes',
     'citas',
     'emergencias',
     'farmacia',
+
 ]
 
 MIDDLEWARE = [
