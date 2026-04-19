@@ -9,7 +9,7 @@ SECRET_KEY = 'django-insecure-medical-system-key-change-in-production'
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'web']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -62,11 +62,11 @@ WSGI_APPLICATION = 'medic_system.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DB_NAME', 'medical_db'),
-        'USER': os.environ.get('DB_USER', 'postgres'),
-        'PASSWORD': os.environ.get('DB_PASSWORD', 'postgres'),
-        'HOST': os.environ.get('DB_HOST', 'localhost'),
-        'PORT': os.environ.get('DB_PORT', '5432'),
+        'NAME': os.environ.get('DATABASE_NAME', 'medicaldb'),
+        'USER': os.environ.get('DATABASE_USER', 'medicaluser'),
+        'PASSWORD': os.environ.get('DATABASE_PASSWORD', 'medicalpass123'),
+        'HOST': os.environ.get('DATABASE_HOST', 'localhost'),
+        'PORT': os.environ.get('DATABASE_PORT', '5432'),
     }
 }
 
