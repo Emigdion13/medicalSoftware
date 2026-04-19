@@ -1,0 +1,77 @@
+[
+  {
+    "model": "farmacia.medicamento",
+    "pk": 1,
+    "fields": {
+      "nombre_generico": "Paracetamol",
+      "formula_quimica": "C8H9NO2",
+      "laboratorio": "Laboratorios Farmacologos S.A.",
+      "descripcion": "Analgesico y antipiretico de uso general"
+    }
+  },
+  {
+    "model": "farmacia.medicamento",
+    "pk": 2,
+    "fields": {
+      "nombre_generico": "Amoxicilina",
+      "formula_quimica": "C16H19N3O5S",
+      "laboratorio": "Biofarm S.A.",
+      "descripcion": "Antibiotico de amplio espectro"
+    }
+  },
+  {
+    "model": "roles.role",
+    "pk": 1,
+    "fields": {
+      "nombre": "Medico",
+      "descripcion": "Profesional medico con acceso completo al sistema",
+      "permisos": ["ver_pacientes"]
+    }
+  },
+  {
+    "model": "usuarios.usuario",
+    "pk": 1,
+    "fields": {
+      "usuario": "medico_juan",
+      "correo_electronico": "juan.perez@clinica.com",
+      "nombre_completo": "Dr Juan Perez",
+      "numero_telefono": "+593 987654321",
+      "rol": 1,
+      "esta_activo": true
+    }
+  },
+  {
+    "model": "pacientes.personal",
+    "pk": 1,
+    "fields": {
+      "usuario": 1,
+      "codigo_empleado": "EMP-001",
+      "fecha_nacimiento": "1985-03-15",
+      "tipo_sangre": "O+",
+      "nombre_contacto_emergencia": "Ana Perez",
+      "telefono_contacto_emergencia": "+593 987654322",
+      "notas_medicas": "Sin alergias"
+    }
+  },
+  {
+    "model": "citas.cita",
+    "pk": 1,
+    "fields": {
+      "paciente": 1,
+      "doctor": 1,
+      "fecha_cita": "2026-04-25T09:30:00Z",
+      "estado": "scheduled",
+      "motivo": "Consulta de rutina"
+    }
+  },
+  {
+    "model": "emergencias.emergencia",
+    "pk": 1,
+    "fields": {
+      "paciente": 1,
+      "tipo_alerta": "allergic_reaction",
+      "descripcion": "Prueba de alergia detectada",
+      "estado": "resolved"
+    }
+  }
+]
