@@ -11,7 +11,7 @@ class EmergenciaListView(ListView):
     model = Emergencia
     template_name = 'emergencias/emergencia_list.html'
     context_object_name = 'emergencias'
-    
+
     def get_queryset(self):
         return Emergencia.objects.select_related('paciente')
 

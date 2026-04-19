@@ -11,7 +11,7 @@ class CitaListView(ListView):
     model = Cita
     template_name = 'citas/cita_list.html'
     context_object_name = 'citas'
-    
+
     def get_queryset(self):
         return Cita.objects.select_related('paciente', 'doctor')
 
