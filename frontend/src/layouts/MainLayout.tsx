@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 interface MainLayoutProps {
   children: ReactNode;
@@ -15,6 +15,12 @@ const navItems = [
 
 export default function MainLayout({ children }: MainLayoutProps) {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('auth_token');
+    navigate('/login');
+  };
 
   return (
     <div className="app-layout">
@@ -39,6 +45,10 @@ export default function MainLayout({ children }: MainLayoutProps) {
           ))}
         </ul>
         <div className="sidebar-footer">
+          <button className="logout-btn" onClick={handleLogout}>
+            <span className="nav-icon">🚪</span>
+            <span>Cerrar Sesión</span>
+          </button>
           <div className="sidebar-footer-avatar">👨‍⚕️</div>
           <div className="sidebar-footer-info">
             <div className="name">Dr. Ramírez</div>

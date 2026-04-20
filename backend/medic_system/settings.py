@@ -65,9 +65,9 @@ WSGI_APPLICATION = 'medic_system.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DATABASE_NAME', 'medicaldb'),
-        'USER': os.environ.get('DATABASE_USER', 'medicaluser'),
-        'PASSWORD': os.environ.get('DATABASE_PASSWORD', 'medicalpass123'),
+        'NAME': os.environ.get('DATABASE_NAME', 'medical_db'),
+        'USER': os.environ.get('DATABASE_USER', 'postgres'),
+        'PASSWORD': os.environ.get('DATABASE_PASSWORD', 'postgres'),
         'HOST': os.environ.get('DATABASE_HOST', 'localhost'),
         'PORT': os.environ.get('DATABASE_PORT', '5432'),
     }

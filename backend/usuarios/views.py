@@ -143,6 +143,9 @@ def api_register(request):
     validated = serializer.validated_data.copy()
     password = validated.pop('password')
 
+    # Mapear username -> usuario (el modelo usa 'usuario', no 'username')
+    validated['usuario'] = validated.pop('username')
+
     rol = validated.get('rol_id')  # Puede ser None
     usuario = Usuario(
         **validated,

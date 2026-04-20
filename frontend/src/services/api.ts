@@ -70,6 +70,6 @@ export const deletePaciente = (id: number) =>
 
 // ── Farmacia API ───────────────────────────────────────────
 export const getFarmacia = () =>
-  api.get('/api/farmacia/').then(r => r.data);
+  api.get('/farmacia/').then(r => r.data);
 
 export default api;

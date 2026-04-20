@@ -11,4 +11,7 @@ COPY . .
 
 EXPOSE 8000
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+COPY wait-for-db.sh .
+RUN chmod +x wait-for-db.sh
+
+CMD ["./wait-for-db.sh"]
