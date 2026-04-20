@@ -4,7 +4,8 @@ Vistas de la aplicación citas.
 
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from .models import Cita
@@ -49,6 +50,7 @@ class CitaDeleteView(DeleteView):
 # ── JSON API Views (new) ────────────────────────────────────────
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def api_citas(request):
     """Obtener todas las citas."""
     citas = Cita.objects.select_related('paciente', 'doctor').all()
@@ -57,6 +59,7 @@ def api_citas(request):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def api_cita_detalle(request, pk):
     """Obtener una cita por ID."""
     try:
@@ -68,6 +71,7 @@ def api_cita_detalle(request, pk):
 
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def api_citas_create(request):
     """Crear una nueva cita."""
     serializer = CitaSerializer(data=request.data)
@@ -78,6 +82,7 @@ def api_citas_create(request):
 
 
 @api_view(['PUT', 'PATCH'])
+@permission_classes([IsAuthenticated])
 def api_cita_actualizar(request, pk):
     """Actualizar una cita."""
     try:
@@ -92,6 +97,7 @@ def api_cita_actualizar(request, pk):
 
 
 @api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
 def api_cita_eliminar(request, pk):
     """Eliminar una cita."""
     try:

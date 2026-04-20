@@ -4,7 +4,8 @@ Vistas de la aplicación farmacia.
 
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from .models import Medicamento, InventarioFarmacia, RegistroMedico, RecetaMedicamento, DispensacionMedicamentos
@@ -95,9 +96,10 @@ class DispensacionCreateView(CreateView):
     success_url = reverse_lazy('farmacia:dispensacion_lista')
 
 
-# ── JSON API Views (new) ────────────────────────────────────────
+# ── JSON API Views (new) ───────────────────────────────────────
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def api_medicamentos(request):
     """Obtener todos los medicamentos."""
     medicamentos = Medicamento.objects.all()
@@ -106,6 +108,7 @@ def api_medicamentos(request):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def api_medicamento_detalle(request, pk):
     """Obtener un medicamento por ID."""
     try:
@@ -117,6 +120,7 @@ def api_medicamento_detalle(request, pk):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def api_inventario(request):
     """Obtener todo el inventario."""
     inventarios = InventarioFarmacia.objects.select_related('medicamento').all()
@@ -125,6 +129,7 @@ def api_inventario(request):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def api_registros(request):
     """Obtener todos los registros médicos."""
     registros = RegistroMedico.objects.select_related('paciente', 'doctor').all()
@@ -133,6 +138,7 @@ def api_registros(request):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def api_recetas(request):
     """Obtener todas las recetas."""
     recetas = RecetaMedicamento.objects.select_related('registro_medico', 'medicamento').all()
@@ -141,6 +147,7 @@ def api_recetas(request):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def api_dispensaciones(request):
     """Obtener todas las dispensaciones."""
     dispensaciones = DispensacionMedicamentos.objects.select_related('paciente', 'medicamento').all()
@@ -151,6 +158,7 @@ def api_dispensaciones(request):
 # ── CRUD API Views (create/update/delete) ───────────────────────
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def api_medicamento_create(request):
     """Crear un nuevo medicamento."""
     serializer = MedicamentoSerializer(data=request.data)
@@ -161,6 +169,7 @@ def api_medicamento_create(request):
 
 
 @api_view(['PUT', 'PATCH'])
+@permission_classes([IsAuthenticated])
 def api_medicamento_actualizar(request, pk):
     """Actualizar un medicamento."""
     try:
@@ -175,6 +184,7 @@ def api_medicamento_actualizar(request, pk):
 
 
 @api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
 def api_medicamento_eliminar(request, pk):
     """Eliminar un medicamento."""
     try:
@@ -186,6 +196,7 @@ def api_medicamento_eliminar(request, pk):
 
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def api_inventario_create(request):
     """Crear un nuevo inventario."""
     serializer = InventarioFarmaciaSerializer(data=request.data)
@@ -196,6 +207,7 @@ def api_inventario_create(request):
 
 
 @api_view(['PUT', 'PATCH'])
+@permission_classes([IsAuthenticated])
 def api_inventario_actualizar(request, pk):
     """Actualizar un inventario."""
     try:
@@ -210,6 +222,7 @@ def api_inventario_actualizar(request, pk):
 
 
 @api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
 def api_inventario_eliminar(request, pk):
     """Eliminar un inventario."""
     try:
@@ -221,6 +234,7 @@ def api_inventario_eliminar(request, pk):
 
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def api_registro_create(request):
     """Crear un nuevo registro médico."""
     serializer = RegistroMedicoSerializer(data=request.data)
@@ -231,6 +245,7 @@ def api_registro_create(request):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def api_registro_detalle(request, pk):
     """Obtener un registro médico por ID."""
     try:
@@ -242,6 +257,7 @@ def api_registro_detalle(request, pk):
 
 
 @api_view(['PUT', 'PATCH'])
+@permission_classes([IsAuthenticated])
 def api_registro_actualizar(request, pk):
     """Actualizar un registro médico."""
     try:
@@ -256,6 +272,7 @@ def api_registro_actualizar(request, pk):
 
 
 @api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
 def api_registro_eliminar(request, pk):
     """Eliminar un registro médico."""
     try:
@@ -267,6 +284,7 @@ def api_registro_eliminar(request, pk):
 
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def api_receta_create(request):
     """Crear una nueva receta."""
     serializer = RecetaMedicamentoSerializer(data=request.data)
@@ -277,6 +295,7 @@ def api_receta_create(request):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def api_receta_detalle(request, pk):
     """Obtener una receta por ID."""
     try:
@@ -288,6 +307,7 @@ def api_receta_detalle(request, pk):
 
 
 @api_view(['PUT', 'PATCH'])
+@permission_classes([IsAuthenticated])
 def api_receta_actualizar(request, pk):
     """Actualizar una receta."""
     try:
@@ -302,6 +322,7 @@ def api_receta_actualizar(request, pk):
 
 
 @api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
 def api_receta_eliminar(request, pk):
     """Eliminar una receta."""
     try:
@@ -313,6 +334,7 @@ def api_receta_eliminar(request, pk):
 
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def api_dispensacion_create(request):
     """Crear una nueva dispensación."""
     serializer = DispensacionMedicamentosSerializer(data=request.data)
@@ -323,6 +345,7 @@ def api_dispensacion_create(request):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def api_dispensacion_detalle(request, pk):
     """Obtener una dispensación por ID."""
     try:
@@ -334,6 +357,7 @@ def api_dispensacion_detalle(request, pk):
 
 
 @api_view(['PUT', 'PATCH'])
+@permission_classes([IsAuthenticated])
 def api_dispensacion_actualizar(request, pk):
     """Actualizar una dispensación."""
     try:
@@ -348,6 +372,7 @@ def api_dispensacion_actualizar(request, pk):
 
 
 @api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
 def api_dispensacion_eliminar(request, pk):
     """Eliminar una dispensación."""
     try:

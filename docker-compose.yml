@@ -15,8 +15,12 @@ services:
     volumes:
       - ./backend:/code
     environment:
-      - DJANGO_SETTINGS_MODULE=config.settings
-      - DATABASE_URL=postgres://postgres:postgres@db:5432/medical_db
+      - DJANGO_SETTINGS_MODULE=medic_system.settings
+      - DATABASE_NAME=medical_db
+      - DATABASE_USER=postgres
+      - DATABASE_PASSWORD=postgres
+      - DATABASE_HOST=db
+      - DATABASE_PORT=5432
       - SECRET_KEY=dev-secret-key-change-in-production
     command: >
       sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
@@ -26,9 +30,16 @@ services:
       - "8000:8000"
 
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
     ports:
-      - "80:80"
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - VITE_API_URL=http://host.docker.internal:8000/api
     depends_on:
       - web
 

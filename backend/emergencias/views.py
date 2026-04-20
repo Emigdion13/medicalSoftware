@@ -4,7 +4,8 @@ Vistas de la aplicación emergencias.
 
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from .models import Emergencia
 from .serializers import EmergenciaSerializer
@@ -48,6 +49,7 @@ class EmergenciaDeleteView(DeleteView):
 # ── API Views (new) ───────────────────────────────────────────────
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def api_emergencias(request):
     """Obtener todas las emergencias."""
     emergencias = Emergencia.objects.select_related('paciente').all()
@@ -56,6 +58,7 @@ def api_emergencias(request):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def api_emergencia_detalle(request, pk):
     """Obtener una emergencia por ID."""
     try:
@@ -67,6 +70,7 @@ def api_emergencia_detalle(request, pk):
 
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def api_emergencia_create(request):
     """Crear una nueva emergencia."""
     serializer = EmergenciaSerializer(data=request.data)
@@ -77,6 +81,7 @@ def api_emergencia_create(request):
 
 
 @api_view(['PUT', 'PATCH'])
+@permission_classes([IsAuthenticated])
 def api_emergencia_actualizar(request, pk):
     """Actualizar una emergencia."""
     try:
@@ -91,6 +96,7 @@ def api_emergencia_actualizar(request, pk):
 
 
 @api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
 def api_emergencia_eliminar(request, pk):
     """Eliminar una emergencia."""
     try:

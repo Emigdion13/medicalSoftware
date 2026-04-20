@@ -4,7 +4,8 @@ Vistas de la aplicación personal.
 
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from .models import Personal
@@ -48,6 +49,7 @@ class PersonalDeleteView(DeleteView):
 # ── JSON API Views (new) ────────────────────────────────────────
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def api_personal(request):
     """Obtener todos los pacientes (personal)."""
     personales = Personal.objects.select_related('usuario').all()
@@ -56,6 +58,7 @@ def api_personal(request):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def api_personal_detalle(request, pk):
     """Obtener un paciente por ID."""
     try:
@@ -67,6 +70,7 @@ def api_personal_detalle(request, pk):
 
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def api_personal_create(request):
     """Crear un nuevo paciente."""
     serializer = PersonalSerializer(data=request.data)
@@ -77,6 +81,7 @@ def api_personal_create(request):
 
 
 @api_view(['PUT', 'PATCH'])
+@permission_classes([IsAuthenticated])
 def api_personal_actualizar(request, pk):
     """Actualizar un paciente."""
     try:
@@ -91,6 +96,7 @@ def api_personal_actualizar(request, pk):
 
 
 @api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
 def api_personal_eliminar(request, pk):
     """Eliminar un paciente."""
     try:

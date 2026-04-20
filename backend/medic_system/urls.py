@@ -17,6 +17,7 @@ from emergencias.views import (
     api_emergencias, api_emergencia_detalle, 
     api_emergencia_create, api_emergencia_actualizar, api_emergencia_eliminar
 )
+from usuarios.views import api_login, api_register
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -42,4 +43,8 @@ urlpatterns = [
     path('api/emergencias/create/', api_emergencia_create, name='api_emergencia_create'),
     path('api/emergencias/<int:pk>/update/', api_emergencia_actualizar, name='api_emergencia_update'),
     path('api/emergencias/<int:pk>/delete/', api_emergencia_eliminar, name='api_emergencia_delete'),
+    
+    # ── Auth API endpoints ─────────────────────────────────────────
+    path('api/login/', api_login, name='api_login'),
+    path('api/register/', api_register, name='api_register'),
 ]

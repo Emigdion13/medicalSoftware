@@ -1,6 +1,4 @@
-﻿"""
-URLs de la aplicación usuarios.
-"""
+"""URLs de la aplicacin usuarios."""
 
 from django.urls import path
 from . import views
@@ -13,4 +11,8 @@ urlpatterns = [
     path('nuevo/', views.UsuarioCreateView.as_view(), name='nuevo'),
     path('<int:pk>/editar/', views.UsuarioUpdateView.as_view(), name='editar'),
     path('<int:pk>/eliminar/', views.UsuarioDeleteView.as_view(), name='eliminar'),
+    
+    # ── API Authentication URLs ───────────────────────────────────────
+    path('api/login/', views.api_login, name='api_login'),
+    path('api/register/', views.api_register, name='api_register'),
 ]

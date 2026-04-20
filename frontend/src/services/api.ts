@@ -14,7 +14,14 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// ── Citas API ────────────────────────────────────────────────
+// ── Auth API ────────────────────────────────────────────────
+export const login = (data: { username: string; password: string }) =>
+  api.post('/login/', data);
+
+export const register = (data: { username: string; password: string; nombre_completo: string; correo_electronico: string }) =>
+  api.post('/register/', data);
+
+// ── Citas API ───────────────────────────────────────────────
 export const getCitas = () => api.get('/citas/').then(r => r.data);
 
 export const getCitaById = (id: number) =>
@@ -29,7 +36,7 @@ export const updateCita = (id: number, data: Record<string, unknown>) =>
 export const deleteCita = (id: number) =>
   api.delete(`/citas/${id}/delete/`).then(r => r.data);
 
-// ── Emergencias API ──────────────────────────────────────────
+// ── Emergencias API ────────────────────────────────────────
 export const getEmergencias = () =>
   api.get('/emergencias/').then(r => r.data);
 
@@ -44,5 +51,25 @@ export const updateEmergencia = (id: number, data: Record<string, unknown>) =>
 
 export const deleteEmergencia = (id: number) =>
   api.delete(`/emergencias/${id}/delete/`).then(r => r.data);
+
+// ── Pacientes API ──────────────────────────────────────────
+export const getPacientes = () =>
+  api.get('/pacientes/').then(r => r.data);
+
+export const getPacienteById = (id: number) =>
+  api.get(`/pacientes/${id}/`).then(r => r.data);
+
+export const createPaciente = (data: Record<string, unknown>) =>
+  api.post('/pacientes/create/', data).then(r => r.data);
+
+export const updatePaciente = (id: number, data: Record<string, unknown>) =>
+  api.put(`/pacientes/${id}/update/`, data).then(r => r.data);
+
+export const deletePaciente = (id: number) =>
+  api.delete(`/pacientes/${id}/delete/`).then(r => r.data);
+
+// ── Farmacia API ───────────────────────────────────────────
+export const getFarmacia = () =>
+  api.get('/api/farmacia/').then(r => r.data);
 
 export default api;

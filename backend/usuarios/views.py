@@ -8,7 +8,7 @@ from django.urls import reverse_lazy
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from django.contrib.auth import authenticate
+
 from django.utils import timezone
 import jwt
 
@@ -82,15 +82,21 @@ def api_login(request):
     username = serializer.validated_data['username']
     password = serializer.validated_data['password']
 
-    user = authenticate(username=username, password=password)
-    if user is None:
+    # Buscar por nombre de usuario
+    try:
+        user = Usuario.objects.get(usuario=username)
+    except Usuario.DoesNotExist:
         # Intentar buscar por correo electrónico
         try:
             user = Usuario.objects.get(correo_electronico=username)
         except Usuario.DoesNotExist:
             return Response({'error': 'Credenciales inválidas'}, status=401)
 
-    if not user.is_active:
+    # Verificar contraseña con hash
+    if not user.check_password(password):
+        return Response({'error': 'Credenciales inválidas'}, status=401)
+
+    if not user.esta_activo:
         return Response({'error': 'Usuario desactivado'}, status=403)
 
     # Generar token JWT
